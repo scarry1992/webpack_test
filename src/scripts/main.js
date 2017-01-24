@@ -1,3 +1,5 @@
-/**
- * Created by scarry-work on 21.01.17.
- */
+require("../style/theme.scss");
+
+window.addEventListener('load', function (event) {
+    document.getElementById('main').innerHTML = "Hello";
+});
