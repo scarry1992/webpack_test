@@ -6,7 +6,7 @@ let webpack = require('webpack'),
     isDevelopment = process.env.NODE_ENV == 'development';
 
 const main = {
-    entry: "./index1.js",
+    entry: "./index.js",
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname, "dist"),
@@ -33,8 +33,17 @@ const main = {
             },
             {
                 test: /\.pug$/,
-                //include: /src\/teplates/,
+                include: /src\/templates/,
                 loader: 'pug'
+            },
+            {
+                test: /\.(jpg|png)$/,
+                include: /src\/img/,
+                loader: 'url',
+                query: {
+                    name: 'img/[name].[ext]?[hash]',
+                    limit: 10000
+                }
             }
         ]
     },
