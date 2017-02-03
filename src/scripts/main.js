@@ -1,7 +1,6 @@
-//import '../style/theme.scss';
+import '../style/theme.scss';
 import _ from 'lodash';
-//import template from '../templates/index.handlebars'
-let template = require('../templates/index.handlebars');
+//import template from '../templates/index.hbs'
+import template from '../templates/message.pug';
 
-window.addEventListener('load', () => {document.getElementById('main').innerHTML = _.isEqual(1,2);});
-console.log(template());
+module.exports = template({message: 'qweqwe'});

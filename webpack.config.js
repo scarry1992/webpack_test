@@ -5,8 +5,8 @@ let webpack = require('webpack'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
     isDevelopment = process.env.NODE_ENV == 'development';
 
-const dev = {
-    entry: "./src/scripts/main.js",
+const main = {
+    entry: "./index1.js",
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname, "dist"),
@@ -17,24 +17,24 @@ const dev = {
             'node_modules'
         ]
     },
-    devTools:"source-map",
-    watch: true,
     module: {
         loaders: [
             {
                 test: /\.scss$/,
                 //loader: 'style!css!sass'
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader', 'sass-loader')
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader', 'sass-loader'),
+                include: /src\/style/
             },
             {
                 test: /\.js$/,
                 loader: 'babel',
-                include: /src\/scripts/
+                //include: /src\/scripts/
+                exclude: /node_modules/
             },
             {
-                test: /\.handlebars$/,
+                test: /\.pug$/,
                 //include: /src\/teplates/,
-                loader: 'handlebars-loader'
+                loader: 'pug'
             }
         ]
     },
@@ -43,5 +43,9 @@ const dev = {
     ]
 };
 
+const dev = {
+    devTools:"source-map",
+    watch: true
+};
 const prod = {};
-module.exports = isDevelopment ? dev:prod;
+module.exports = isDevelopment ? Object.assign(main, dev):Object.assign(main, prod);
