@@ -13,9 +13,13 @@ const main = {
         publicPath: "/assets/"
     },
     resolve: {
-        modulesDirectories: [
-            'node_modules'
-        ]
+        modulesDirectories: ['node_modules'],
+        extensions: ['', '.js']
+    },
+    resolveLoaders: {
+        modulesDirectories: ['node_modules'],
+        extensions: ['','.js'],
+        moduleTemplate: ['*','*-loader']
     },
     module: {
         loaders: [
@@ -48,12 +52,22 @@ const main = {
         ]
     },
     plugins: [
-        new ExtractTextPlugin('theme.css')
+        new ExtractTextPlugin('theme.css'),
+        new webpack.DefinePlugin({
+            NODE_ENV_DEV: isDevelopment
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+                drop_console: true,
+                unsafe: true
+            }
+        })
     ]
 };
 
 const dev = {
-    devTools:"source-map",
+    devTools:"cheap-inline-module-source-map",
     watch: true
 };
 const prod = {};
