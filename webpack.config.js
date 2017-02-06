@@ -3,7 +3,9 @@
 let webpack = require('webpack'),
     path = require('path'),
     ExtractTextPlugin = require("extract-text-webpack-plugin"),
-    isDevelopment = process.env.NODE_ENV == 'development';
+    isDevelopment = process.env.NODE_ENV == 'development',
+    dev ={},
+    prod = {};
 
 const main = {
     entry: "./index.js",
@@ -55,7 +57,24 @@ const main = {
         new ExtractTextPlugin('theme.css'),
         new webpack.DefinePlugin({
             NODE_ENV_DEV: isDevelopment
-        }),
+        })
+    ]
+};
+
+if (isDevelopment) {
+    Object.assign(dev, main);
+    dev.devTools = 'cheap-inline-module-source-map';
+    dev.watch = true;
+    dev.debug = true;
+    dev.progress = true;
+    dev.devServer = {
+        inline: true
+    };
+}
+
+if (!isDevelopment) {
+    Object.assign(prod, main);
+    prod.plugins.push(
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -63,12 +82,7 @@ const main = {
                 unsafe: true
             }
         })
-    ]
-};
+    );
+}
 
-const dev = {
-    devTools:"cheap-inline-module-source-map",
-    watch: true
-};
-const prod = {};
-module.exports = isDevelopment ? Object.assign(main, dev):Object.assign(main, prod);
+module.exports = isDevelopment ? dev:prod;
