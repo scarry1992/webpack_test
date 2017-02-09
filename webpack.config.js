@@ -63,7 +63,7 @@ const main = {
 
 if (isDevelopment) {
     Object.assign(dev, main);
-    dev.devTools = 'cheap-inline-module-source-map';
+    dev.devtool = 'cheap-inline-module-source-map';
     dev.watch = true;
     dev.debug = true;
     dev.progress = true;
