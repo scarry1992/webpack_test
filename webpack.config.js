@@ -8,11 +8,18 @@ let webpack = require('webpack'),
     prod = {};
 
 const main = {
-    entry: "./index.js",
+    //entry: "./index.js",//для единственной точки входа
+    context: path.resolve(__dirname, 'frontend'),
+    entry: {
+        main: './main.js',
+        about: './about.js',
+        common: ['../src/scripts/welcome', './common.js']//для добавления общего функционала. последним надо указывать common
+    },
     output: {
         filename: "[name].js",
-        path: path.resolve(__dirname, "dist"),
-        publicPath: "/assets/"
+        path: path.resolve(__dirname, "public"),
+        publicPath: "/assets/",
+        library: '[name]'
     },
     resolve: {
         modulesDirectories: ['node_modules'],
@@ -57,6 +64,12 @@ const main = {
         new ExtractTextPlugin('theme.css'),
         new webpack.DefinePlugin({
             NODE_ENV_DEV: isDevelopment
+        }),
+        new webpack.NoErrorsPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'common',
+            //minChunks: 2,//выносятся те модули, которые есть хотя бы в 2х точках входа
+            //chanks: ['welcome', 'main']//эти модули надо выносить в общий модуль
         })
     ]
 };
