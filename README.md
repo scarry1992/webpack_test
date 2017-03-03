@@ -34,3 +34,12 @@
     - require.context('./path/', useSubdirectories=false, regExp=/\.js$/)
         - метод resolve('./login') возвращает номер модуля
         - метод keys() возвращает все модули в контексте с расширениями и без
+- 03.03
+    - bundle-loader(routing)
+    - new webpack.ContextReplacementPlugin(
+                      resourceRegExp,
+                      [newContentResource],
+                      [newContentRecursive],
+                      [newContentRegExp])
+    - new webpack.IgnorePlugin(requestRegExp, [contextRegExp])
+    - Externals

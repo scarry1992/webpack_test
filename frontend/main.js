@@ -32,7 +32,7 @@ window.addEventListener('load', () => {
 
         require.ensure([], function (require) {
             //let action = require(`../src/scripts/auth/${elem.classList}`);
-            let context = require.context('../src/scripts/auth', false, /\.js$/),//расширение не обязательно. но тогда модуль попадет в 2х видах
+            let context = require.context('../src/scripts/auth', false, /^(?!.*\.js$).*/),//расширение не обязательно. но тогда модуль попадет в 2х видах
                 action = context(`./${elem.classList}`);
 
             console.log(context.resolve('./login'), context.keys());
@@ -51,3 +51,5 @@ window.addEventListener('load', () => {
         }, 'auth');//имя для общего модуля для авторизации
     })
 });
+
+console.log(_.merge({user:'1'}, {name:'koly'}));

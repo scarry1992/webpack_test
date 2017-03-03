@@ -40,6 +40,14 @@ const main = {
             },
             {
                 test: /\.js$/,
+                include: /src\/scripts\/routing/,
+                loader: 'bundle',
+                query: {
+                    lazy: true
+                }
+            },
+            {
+                test: /\.js$/,
                 loader: 'babel',
                 //include: /src\/scripts/
                 exclude: /node_modules/
@@ -70,8 +78,15 @@ const main = {
             name: 'common',
             //minChunks: 2,//выносятся те модули, которые есть хотя бы в 2х точках входа
             //chanks: ['welcome', 'main']//эти модули надо выносить в общий модуль
-        })
-    ]
+        }),
+        new webpack.ContextReplacementPlugin(/locale$/, /ru|en-gb/),
+        new webpack.IgnorePlugin(/en-gb/)
+    ],
+    externals: {
+        lodash: '_',
+        react: 'React',
+        "react-dom": 'ReactDOM'
+    }
 };
 
 if (isDevelopment) {
