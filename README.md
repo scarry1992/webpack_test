@@ -43,3 +43,8 @@
                       [newContentRegExp])
     - new webpack.IgnorePlugin(requestRegExp, [contextRegExp])
     - Externals
+- 05.03
+    - PrividePlugin
+    - noParse, exclude, include
+    - root, alias
+    - exports-loader, imports-loader, expose-loader - для работы с легаси кодом

@@ -13,7 +13,10 @@
 // let today = moment(new Date()).locale('ru');
 //
 // console.log(today.calendar());
-import _ from 'lodash';
+
+
+
+//import _ from 'lodash';
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 

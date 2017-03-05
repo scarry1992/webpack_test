@@ -22,8 +22,13 @@ const main = {
         library: '[name]'
     },
     resolve: {
-        modulesDirectories: ['node_modules'],
-        extensions: ['', '.js']
+        //modulesDirectories: ['node_modules', 'vendors'],
+        extensions: ['', '.js'],
+        root: path.resolve(__dirname, 'vendors'),//для указания доп директории для пакетов,
+        //modules: [path.resolve(__dirname, '/vendors'), 'node_modules'],
+        alias: {
+            old: 'old/dist/old/old.js'
+        }
     },
     resolveLoaders: {
         modulesDirectories: ['node_modules'],
@@ -65,8 +70,14 @@ const main = {
                     name: 'img/[name].[ext]?[hash]',
                     limit: 10000
                 }
+            },
+            {
+                test: /old\.js$/,
+                //loader: 'imports?workSetting=>{delay:1000}!exports?Work'
+                loaders:['expose?Work','imports?workSetting=>{delay:1000}', 'exports?Work']
             }
-        ]
+        ],
+        noParse: /\/node_modules\/react|lodash/
     },
     plugins: [
         new ExtractTextPlugin('theme.css'),
@@ -80,10 +91,13 @@ const main = {
             //chanks: ['welcome', 'main']//эти модули надо выносить в общий модуль
         }),
         new webpack.ContextReplacementPlugin(/locale$/, /ru|en-gb/),
-        new webpack.IgnorePlugin(/en-gb/)
+        new webpack.IgnorePlugin(/en-gb/),
+        new webpack.ProvidePlugin({//еще вариант для указания глобальных переменных
+            _: 'lodash'
+        })
     ],
     externals: {
-        lodash: '_',
+        //lodash: '_',
         react: 'React',
         "react-dom": 'ReactDOM'
     }

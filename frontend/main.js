@@ -53,3 +53,9 @@ window.addEventListener('load', () => {
 });
 
 console.log(_.merge({user:'1'}, {name:'koly'}));
+
+
+
+let old = require('old');
+
+old();
